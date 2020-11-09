@@ -1,10 +1,11 @@
+#[derive(Debug, PartialEq)]
 pub struct Vec3 {
     e: (f64, f64, f64),
 }
 
 impl Vec3 {
     pub fn new(e0: f64, e1: f64, e2: f64) -> Self {
-        Vec3 { e: (e0, e1, e2) }
+        Self { e: (e0, e1, e2) }
     }
 
     pub fn x(&self) -> f64 {
@@ -38,12 +39,26 @@ impl Vec3 {
     pub fn squared_length(&self) -> f64 {
         self.e.0.powi(2) + self.e.1.powi(2) + self.e.2.powi(2)
     }
+
+    pub fn to_unit(&self) -> Self {
+        let k = 1.0 / self.length();
+        Self::new(self.e.0 * k, self.e.1 * k, self.e.2 * k)
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use assert_approx_eq::assert_approx_eq;
+
+    macro_rules! assert_vec_eq {
+        ($a:expr, $b:expr) => {{
+            let (a, b) = (&$a, &$b);
+            assert_approx_eq!((*a).x(), (*b).x(), 1.0e-3);
+            assert_approx_eq!((*a).y(), (*b).y(), 1.0e-3);
+            assert_approx_eq!((*a).z(), (*b).z(), 1.0e-3);
+        }};
+    }
 
     #[test]
     fn test_length() {
@@ -55,5 +70,11 @@ mod tests {
     fn test_squared_length() {
         let v = Vec3::new(0.3, 0.4, 0.5);
         assert_eq!(v.squared_length(), 0.5);
+    }
+
+    #[test]
+    fn test_to_unit() {
+        let v = Vec3::new(3.0, 4.0, 5.0);
+        assert_vec_eq!(v.to_unit(), Vec3::new(0.424, 0.565, 0.707));
     }
 }
