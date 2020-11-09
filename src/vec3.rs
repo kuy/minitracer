@@ -1,4 +1,4 @@
-use std::ops::{Add, Sub};
+use std::ops::{Add, Neg, Sub};
 
 #[derive(Debug)]
 pub struct Vec3 {
@@ -59,7 +59,7 @@ impl PartialEq for Vec3 {
 impl Add for Vec3 {
     type Output = Self;
 
-    fn add(self, other: Self) -> Self {
+    fn add(self, other: Self) -> Self::Output {
         Self {
             e: (
                 self.e.0 + other.e.0,
@@ -70,10 +70,20 @@ impl Add for Vec3 {
     }
 }
 
+impl Neg for Vec3 {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self {
+            e: (-self.e.0, -self.e.1, -self.e.2),
+        }
+    }
+}
+
 impl Sub for Vec3 {
     type Output = Self;
 
-    fn sub(self, other: Self) -> Self {
+    fn sub(self, other: Self) -> Self::Output {
         Self {
             e: (
                 self.e.0 - other.e.0,
@@ -93,6 +103,12 @@ mod tests {
         let v1 = Vec3::new(3.0, 4.0, 5.0);
         let v2 = Vec3::new(2.2, 0.7, 0.25);
         assert_eq!(v1 + v2, Vec3::new(5.2, 4.7, 5.25));
+    }
+
+    #[test]
+    fn test_to_neg() {
+        let v = Vec3::new(1.6, 2.0, 5.0);
+        assert_eq!(-v, Vec3::new(-1.6, -2.0, -5.0));
     }
 
     #[test]
