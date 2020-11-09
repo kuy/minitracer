@@ -1,6 +1,6 @@
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Vec3 {
     e: (f64, f64, f64),
 }

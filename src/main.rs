@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate approx;
 
+mod ray;
 mod vec3;
 
 use vec3::Vec3;
