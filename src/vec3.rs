@@ -1,4 +1,4 @@
-use std::ops::Add;
+use std::ops::{Add, Sub};
 
 #[derive(Debug)]
 pub struct Vec3 {
@@ -70,6 +70,20 @@ impl Add for Vec3 {
     }
 }
 
+impl Sub for Vec3 {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self {
+            e: (
+                self.e.0 - other.e.0,
+                self.e.1 - other.e.1,
+                self.e.2 - other.e.2,
+            ),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -79,6 +93,13 @@ mod tests {
         let v1 = Vec3::new(3.0, 4.0, 5.0);
         let v2 = Vec3::new(2.2, 0.7, 0.25);
         assert_eq!(v1 + v2, Vec3::new(5.2, 4.7, 5.25));
+    }
+
+    #[test]
+    fn test_to_sub() {
+        let v1 = Vec3::new(1.6, 2.0, 5.0);
+        let v2 = Vec3::new(2.2, 0.22, 0.25);
+        assert_eq!(v1 - v2, Vec3::new(-0.6, 1.78, 4.75));
     }
 
     #[test]
