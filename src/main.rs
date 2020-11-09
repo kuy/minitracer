@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate approx;
+
 mod vec3;
 
 fn main() {
