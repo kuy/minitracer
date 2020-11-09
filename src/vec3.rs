@@ -1,4 +1,4 @@
-use std::ops::{Add, Neg, Sub};
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 #[derive(Debug)]
 pub struct Vec3 {
@@ -70,6 +70,34 @@ impl Add for Vec3 {
     }
 }
 
+impl Div for Vec3 {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self::Output {
+        Self {
+            e: (
+                self.e.0 / other.e.0,
+                self.e.1 / other.e.1,
+                self.e.2 / other.e.2,
+            ),
+        }
+    }
+}
+
+impl Mul for Vec3 {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self::Output {
+        Self {
+            e: (
+                self.e.0 * other.e.0,
+                self.e.1 * other.e.1,
+                self.e.2 * other.e.2,
+            ),
+        }
+    }
+}
+
 impl Neg for Vec3 {
     type Output = Self;
 
@@ -106,9 +134,23 @@ mod tests {
     }
 
     #[test]
+    fn test_to_div() {
+        let v1 = Vec3::new(3.0, 4.0, 5.0);
+        let v2 = Vec3::new(2.0, 0.2, 0.2);
+        assert_eq!(v1 / v2, Vec3::new(1.5, 20.0, 25.0));
+    }
+
+    #[test]
     fn test_to_neg() {
         let v = Vec3::new(1.6, 2.0, 5.0);
         assert_eq!(-v, Vec3::new(-1.6, -2.0, -5.0));
+    }
+
+    #[test]
+    fn test_to_mul() {
+        let v1 = Vec3::new(3.0, 4.0, 5.0);
+        let v2 = Vec3::new(0.1, 2.0, 0.2);
+        assert_eq!(v1 * v2, Vec3::new(0.3, 8.0, 1.0));
     }
 
     #[test]
