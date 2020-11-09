@@ -98,6 +98,16 @@ impl Mul for Vec3 {
     }
 }
 
+impl Mul<f64> for Vec3 {
+    type Output = Self;
+
+    fn mul(self, other: f64) -> Self::Output {
+        Self {
+            e: (self.e.0 * other, self.e.1 * other, self.e.2 * other),
+        }
+    }
+}
+
 impl Neg for Vec3 {
     type Output = Self;
 
@@ -127,34 +137,40 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_to_add() {
+    fn test_add() {
         let v1 = Vec3::new(3.0, 4.0, 5.0);
         let v2 = Vec3::new(2.2, 0.7, 0.25);
         assert_eq!(v1 + v2, Vec3::new(5.2, 4.7, 5.25));
     }
 
     #[test]
-    fn test_to_div() {
+    fn test_div() {
         let v1 = Vec3::new(3.0, 4.0, 5.0);
         let v2 = Vec3::new(2.0, 0.2, 0.2);
         assert_eq!(v1 / v2, Vec3::new(1.5, 20.0, 25.0));
     }
 
     #[test]
-    fn test_to_neg() {
+    fn test_neg() {
         let v = Vec3::new(1.6, 2.0, 5.0);
         assert_eq!(-v, Vec3::new(-1.6, -2.0, -5.0));
     }
 
     #[test]
-    fn test_to_mul() {
+    fn test_mul() {
         let v1 = Vec3::new(3.0, 4.0, 5.0);
         let v2 = Vec3::new(0.1, 2.0, 0.2);
         assert_eq!(v1 * v2, Vec3::new(0.3, 8.0, 1.0));
     }
 
     #[test]
-    fn test_to_sub() {
+    fn test_mul_with_f64() {
+        let v = Vec3::new(3.0, 4.0, 5.0);
+        assert_eq!(v * 1.5, Vec3::new(4.5, 6.0, 7.5));
+    }
+
+    #[test]
+    fn test_sub() {
         let v1 = Vec3::new(1.6, 2.0, 5.0);
         let v2 = Vec3::new(2.2, 0.22, 0.25);
         assert_eq!(v1 - v2, Vec3::new(-0.6, 1.78, 4.75));
