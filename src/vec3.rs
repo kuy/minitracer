@@ -34,17 +34,31 @@ impl Vec3 {
         self.e.2
     }
 
+    pub fn dot(&self, other: Self) -> f64 {
+        self.e.0 * other.e.0 + self.e.1 * other.e.1 + self.e.2 * other.e.2
+    }
+
+    pub fn cross(&self, other: Self) -> Self {
+        Self {
+            e: (
+                self.e.1 * other.e.2 - self.e.2 * other.e.1,
+                -(self.e.0 * other.e.2 - self.e.2 * other.e.0),
+                self.e.0 * other.e.1 - self.e.1 * other.e.0,
+            ),
+        }
+    }
+
+    pub fn to_unit(&self) -> Self {
+        let k = 1.0 / self.length();
+        Self::new(self.e.0 * k, self.e.1 * k, self.e.2 * k)
+    }
+
     pub fn length(&self) -> f64 {
         self.squared_length().sqrt()
     }
 
     pub fn squared_length(&self) -> f64 {
         self.e.0.powi(2) + self.e.1.powi(2) + self.e.2.powi(2)
-    }
-
-    pub fn to_unit(&self) -> Self {
-        let k = 1.0 / self.length();
-        Self::new(self.e.0 * k, self.e.1 * k, self.e.2 * k)
     }
 }
 
@@ -80,6 +94,16 @@ impl Div for Vec3 {
                 self.e.1 / other.e.1,
                 self.e.2 / other.e.2,
             ),
+        }
+    }
+}
+
+impl Div<f64> for Vec3 {
+    type Output = Self;
+
+    fn div(self, other: f64) -> Self::Output {
+        Self {
+            e: (self.e.0 / other, self.e.1 / other, self.e.2 / other),
         }
     }
 }
@@ -161,6 +185,12 @@ mod tests {
     }
 
     #[test]
+    fn test_div_with_f64() {
+        let v = Vec3::new(3.0, 4.0, 5.0);
+        assert_eq!(v / 2.0, Vec3::new(1.5, 2.0, 2.5));
+    }
+
+    #[test]
     fn test_neg() {
         let v = Vec3::new(1.6, 2.0, 5.0);
         assert_eq!(-v, Vec3::new(-1.6, -2.0, -5.0));
@@ -205,5 +235,23 @@ mod tests {
     fn test_to_unit() {
         let v = Vec3::new(3.0, 4.0, 5.0);
         assert_eq!(v.to_unit(), Vec3::new(0.424, 0.565, 0.707));
+    }
+
+    #[test]
+    fn test_dot() {
+        let v1 = Vec3::new(1.0, -2.0, 3.0);
+        let v2 = Vec3::new(3.0, 2.0, -1.0);
+        assert_eq!(v1.dot(v2), -4.0);
+    }
+
+    #[test]
+    fn test_cross() {
+        let v1 = Vec3::new(3.0, 4.0, 5.0);
+        let v2 = Vec3::new(1.0, 0.0, -1.0);
+        assert_eq!(v1.cross(v2), Vec3::new(-4.0, 8.0, -4.0));
+
+        let v1 = Vec3::new(1.0, 2.0, 3.0);
+        let v2 = Vec3::new(3.0, 4.0, 5.0);
+        assert_eq!(v1.cross(v2), Vec3::new(-2.0, 4.0, -2.0));
     }
 }
