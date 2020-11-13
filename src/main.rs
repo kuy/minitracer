@@ -38,7 +38,19 @@ fn main() {
 }
 
 fn color(r: Ray) -> Vec3 {
+    if hit_sphere(Vec3::new(0.0, 0.0, -1.0), 0.5, &r) {
+        return Vec3::new(1.0, 0.0, 0.0);
+    }
     let unit_dir = r.direction().to_unit();
     let t = (unit_dir.y() + 1.0) / 2.0;
     (1.0 - t) * Vec3::new(1.0, 1.0, 1.0) + t * Vec3::new(0.5, 0.7, 1.0)
+}
+
+fn hit_sphere(center: Vec3, radius: f64, r: &Ray) -> bool {
+    let oc = r.origin().clone() - center;
+    let a = r.direction().dot(r.direction().clone());
+    let b = 2.0 * oc.dot(r.direction().clone());
+    let c = oc.dot(oc.clone()) - radius.powi(2);
+    let discriminant = b.powi(2) - 4.0 * a * c;
+    discriminant > 0.0
 }

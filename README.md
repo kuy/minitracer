@@ -11,3 +11,7 @@
 ### Chapter 3
 
 ![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch3.png?raw=true)
+
+### Chapter 4
+
+![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch4.png?raw=true)
