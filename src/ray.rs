@@ -18,7 +18,7 @@ impl Ray {
         &self.b
     }
 
-    pub fn point_at_parameter(&self, t: f64) -> Vec3 {
+    pub fn at(&self, t: f64) -> Vec3 {
         self.a.clone() + t * self.b.clone()
     }
 }
