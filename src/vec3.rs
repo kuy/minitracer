@@ -54,10 +54,10 @@ impl Vec3 {
     }
 
     pub fn length(&self) -> f64 {
-        self.squared_length().sqrt()
+        self.length_squared().sqrt()
     }
 
-    pub fn squared_length(&self) -> f64 {
+    pub fn length_squared(&self) -> f64 {
         self.e.0.powi(2) + self.e.1.powi(2) + self.e.2.powi(2)
     }
 }
@@ -226,9 +226,9 @@ mod tests {
     }
 
     #[test]
-    fn test_squared_length() {
+    fn test_length_squared() {
         let v = Vec3::new(0.3, 0.4, 0.5);
-        assert_abs_diff_eq!(v.squared_length(), 0.5, epsilon = 1e-3f64);
+        assert_abs_diff_eq!(v.length_squared(), 0.5, epsilon = 1e-3f64);
     }
 
     #[test]

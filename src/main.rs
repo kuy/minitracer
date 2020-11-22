@@ -50,7 +50,7 @@ fn ray_color(r: Ray) -> Vec3 {
 
 fn hit_sphere(center: Vec3, radius: f64, r: &Ray) -> f64 {
     let oc = r.origin().clone() - center;
-    let a = r.direction().dot(r.direction().clone());
+    let a = r.direction().length_squared();
     let b = 2.0 * oc.dot(r.direction().clone());
     let c = oc.dot(oc.clone()) - radius.powi(2);
     let discriminant = b.powi(2) - 4.0 * a * c;
