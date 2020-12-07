@@ -34,11 +34,9 @@ impl Hittable for Sphere {
         }
 
         let pos = r.at(root);
-        let normal = (pos.clone() - self.center.clone()) / self.radius;
-        Some(HitRecord {
-            pos,
-            t: root,
-            normal,
-        })
+        let outward_normal = (pos.clone() - self.center.clone()) / self.radius;
+        let mut rec = HitRecord::new(pos, outward_normal.clone(), root);
+        rec.set_face_normal(&r, outward_normal);
+        Some(rec)
     }
 }
