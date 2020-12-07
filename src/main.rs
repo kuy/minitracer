@@ -8,15 +8,21 @@ mod sphere;
 mod vec3;
 
 use hittable::Hittable;
+use hittable_list::HittableList;
 use ray::Ray;
 use sphere::Sphere;
-use vec3::{Point3, Vec3};
+use vec3::{Color, Point3, Vec3};
 
 fn main() {
     // Image
     let aspect_ratio = 16.0 / 9.0;
     let image_width = 400;
     let image_height = (f64::from(image_width) / aspect_ratio) as i32;
+
+    // World
+    let mut world = HittableList::new();
+    world.push(Box::new(Sphere::new(Point3::new(0.0, 0.0, -1.0), 0.5)));
+    world.push(Box::new(Sphere::new(Point3::new(0.0, -100.5, -1.0), 100.0)));
 
     // Camera
     let viewport_height = 2.0;
@@ -43,7 +49,7 @@ fn main() {
                 origin.clone(),
                 lower_left_corner.clone() + u * horizontal.clone() + v * vertical.clone(),
             );
-            let col = ray_color(r);
+            let col = ray_color(r, &world);
 
             let ir = (255.0 * col.r()).round() as i32;
             let ig = (255.0 * col.g()).round() as i32;
@@ -54,13 +60,11 @@ fn main() {
     }
 }
 
-fn ray_color(r: Ray) -> Vec3 {
-    let sphere = Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5);
-    if let Some(rec) = sphere.hit(&r, -10.0, 10.0) {
-        let n = (r.at(rec.t) - Vec3::new(0.0, 0.0, -1.0)).to_unit();
-        return Vec3::new(n.x() + 1.0, n.y() + 1.0, n.z() + 1.0) / 2.0;
+fn ray_color(r: Ray, world: &impl Hittable) -> Color {
+    if let Some(rec) = world.hit(&r, 0.0, f64::INFINITY) {
+        return 0.5 * (rec.normal * Color::new(1.0, 1.0, 1.0));
     }
     let unit_dir = r.direction().to_unit();
-    let t = (unit_dir.y() + 1.0) / 2.0;
-    (1.0 - t) * Vec3::new(1.0, 1.0, 1.0) + t * Vec3::new(0.5, 0.7, 1.0)
+    let t = 0.5 * (unit_dir.y() + 1.0);
+    (1.0 - t) * Color::new(1.0, 1.0, 1.0) + t * Color::new(0.5, 0.7, 1.0)
 }
