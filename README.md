@@ -16,6 +16,6 @@
 
 ![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch4.png?raw=true)
 
-### Chapter 6.11
+### Chapter 6.1
 
-![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch6-11.png?raw=true)
+![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch6-1.png?raw=true)
