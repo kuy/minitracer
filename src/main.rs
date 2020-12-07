@@ -62,7 +62,7 @@ fn main() {
 
 fn ray_color(r: Ray, world: &impl Hittable) -> Color {
     if let Some(rec) = world.hit(&r, 0.0, f64::INFINITY) {
-        return 0.5 * (rec.normal * Color::new(1.0, 1.0, 1.0));
+        return 0.5 * (rec.normal + Color::new(1.0, 1.0, 1.0));
     }
     let unit_dir = r.direction().to_unit();
     let t = 0.5 * (unit_dir.y() + 1.0);

@@ -10,12 +10,16 @@
 
 ### Chapter 3
 
-![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch3.png?raw=true)
+![c3](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch3.png?raw=true)
 
 ### Chapter 4
 
-![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch4.png?raw=true)
+![c4](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch4.png?raw=true)
 
 ### Chapter 6.1
 
-![c1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch6-1.png?raw=true)
+![c6-1](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch6-1.png?raw=true)
+
+### Chapter 6.7
+
+![c6-7](https://raw.githubusercontent.com/kuy/minitracer/main/output/ch6-7.png?raw=true)
